@@ -1,8 +1,11 @@
 package com.atm.backend.business.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.atm.backend.business.dto.UserDto;
 import com.atm.backend.business.services.ICustomerService;
 
+@Service
 public class CustomerService implements ICustomerService {
 
     @Override

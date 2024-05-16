@@ -2,9 +2,12 @@ package com.atm.backend.business.impl;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
 import com.atm.backend.business.dto.UserDto;
 import com.atm.backend.business.services.IAdminService;
 
+@Service
 public class AdminService implements IAdminService {
 
     @Override

@@ -13,6 +13,8 @@ public class UserDto {
     private String name;
     private String surname;
     private String email;
-    private String amount;
+    private String password;
+    private Long amount;
     private Long role_id;
+
 }
