@@ -31,8 +31,11 @@ public class SecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain)
 
-            throws ServletException, IOException {
-
+            throws ServletException, IOException, java.io.IOException {
+        if ("/authenticate".equals(request.getServletPath()) || "/register".equals(request.getServletPath())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         var token = this.recoverToken(request);
 
         if (token != null) {
@@ -41,14 +44,15 @@ public class SecurityFilter extends OncePerRequestFilter {
             var user = userRepository.findUserByEmail(validationToken);
             var authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"Invalid or missing token\"}");
+            return;
         }
 
-        try {
+        filterChain.doFilter(request, response);
 
-            filterChain.doFilter(request, response);
-        } catch (java.io.IOException | ServletException e) {
-            e.printStackTrace();
-        }
     }
 
     private String recoverToken(HttpServletRequest request) {

@@ -9,5 +9,5 @@ import com.atm.backend.data.entity.RoleEntity;
 @Repository
 @EnableJpaRepositories
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
-
+    public RoleEntity findByName(String name);
 }

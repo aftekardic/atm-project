@@ -13,6 +13,4 @@ public interface ICustomerService {
 
     public String updateUserById(Long id, UserDto userDto);
 
-    public UserDto registerUser(UserDto registerRequest);
-
 }

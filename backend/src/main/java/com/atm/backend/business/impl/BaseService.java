@@ -2,8 +2,10 @@ package com.atm.backend.business.impl;
 
 import org.springframework.stereotype.Service;
 
+import com.atm.backend.business.dto.RoleDto;
 import com.atm.backend.business.dto.UserDto;
 import com.atm.backend.business.services.IBaseService;
+import com.atm.backend.data.entity.RoleEntity;
 import com.atm.backend.data.entity.UserEntity;
 
 @Service
@@ -39,6 +41,26 @@ public class BaseService implements IBaseService {
         userDto.setPassword(userEntity.getPassword());
 
         return userDto;
+    }
+
+    @Override
+    public RoleEntity roleDtoToEntity(RoleDto roleDto) {
+        if (roleDto == null) {
+            return null;
+        }
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setName(roleDto.getName());
+        return roleEntity;
+    }
+
+    @Override
+    public RoleDto roleEntityToDto(RoleEntity roleEntity) {
+        if (roleEntity == null) {
+            return null;
+        }
+        RoleDto roleDto = new RoleDto();
+        roleDto.setName(roleEntity.getName());
+        return roleDto;
     }
 
 }
