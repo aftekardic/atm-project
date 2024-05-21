@@ -1,0 +1,59 @@
+div.ant-menu-submenu-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  transition: none !important;
+  padding-inline: 0 !important;
+  margin-inline: 0 !important;
+  margin-block: 0 !important;
+  padding-inline-end: 0 !important;
+  height: auto !important;
+  line-height: 0 !important;
+  color: #fff !important;
+}
+
+:where(.css-dev-only-do-not-override-17seli4).ant-menu-light:not(
+    .ant-menu-horizontal
+  )
+  .ant-menu-submenu-title:hover {
+  background-color: transparent !important;
+}
+
+li.ant-menu-submenu-vertical {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  border-radius: 0 !important;
+  transition: none !important;
+  padding-inline: 0 !important;
+}
+
+li.ant-menu-overflow-item.ant-menu-item.ant-menu-item-only-child {
+  display: flex;
+  align-items: center;
+}
+
+:where(.css-dev-only-do-not-override-17seli4).ant-menu
+  .ant-menu-item
+  .ant-menu-item-icon
+  + span,
+:where(.css-dev-only-do-not-override-17seli4).ant-menu
+  .ant-menu-submenu-title
+  .ant-menu-item-icon
+  + span,
+:where(.css-dev-only-do-not-override-17seli4).ant-menu
+  .ant-menu-item
+  .anticon
+  + span,
+:where(.css-dev-only-do-not-override-17seli4).ant-menu
+  .ant-menu-submenu-title
+  .anticon
+  + span {
+  margin-inline-start: 8px;
+}
