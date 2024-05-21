@@ -42,9 +42,6 @@ function RegisterComponent({ registerClick }) {
       {...formItemLayout}
       form={form}
       name="register"
-      initialValues={{
-        prefix: "86",
-      }}
       style={{
         maxWidth: 600,
       }}

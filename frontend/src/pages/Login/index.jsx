@@ -1,8 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Tabs } from "antd";
 import styles from "./styles.module.css";
 import LoginComponent from "../../components/AuthComponents/LoginComponent";
 import RegisterComponent from "../../components/AuthComponents/RegisterComponent";
+
+const { TabPane } = Tabs;
 function LoginPage() {
   const navigate = useNavigate();
 
@@ -18,8 +21,14 @@ function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <LoginComponent loginClick={handleLoginClick} />
-      <RegisterComponent registerClick={handleRegisterClick} />
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Login" key="1">
+          <LoginComponent loginClick={handleLoginClick} />
+        </TabPane>
+        <TabPane tab="Register" key="2">
+          <RegisterComponent registerClick={handleRegisterClick} />
+        </TabPane>
+      </Tabs>
     </div>
   );
 }
