@@ -1,39 +1,26 @@
 import React from "react";
 import { Layout, Menu, theme } from "antd";
-import { Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import ProfileMenuComponent from "./ProfileMenuComponent";
 
 const { Header, Content, Footer } = Layout;
 
 function LayoutComponent() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const items = [
-    {
-      key: "1",
-      label: "Home",
-      onClick: () => {
-        navigate("/home");
-      },
-    },
-    {
-      key: "2",
-      label: "Deposit",
-      onClick: () => {
-        navigate("/deposit");
-      },
-    },
-    {
-      key: "3",
-      label: "Withdraw",
-      onClick: () => {
-        navigate("/withdraw");
-      },
-    },
+    { key: "/home", label: "Home" },
+    { key: "/deposit", label: "Deposit" },
+    { key: "/withdraw", label: "Withdraw" },
   ];
+
+  const handleMenuClick = (e) => {
+    navigate(e.key);
+  };
   return (
     <Layout style={{ height: "100vh" }}>
       <Header
@@ -41,6 +28,7 @@ function LayoutComponent() {
           position: "sticky",
           top: 0,
           zIndex: 1,
+          width: "100%",
           display: "flex",
           alignItems: "center",
         }}
@@ -49,8 +37,9 @@ function LayoutComponent() {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["1"]}
+          selectedKeys={[location.pathname]}
           items={items}
+          onClick={handleMenuClick}
           style={{
             flex: 1,
             minWidth: 0,
