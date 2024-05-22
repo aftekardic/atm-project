@@ -4,8 +4,7 @@ import { Button, Form, Input } from "antd";
 import styles from "./styles/login.module.css";
 function LoginComponent({ loginClick }) {
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-    loginClick();
+    loginClick(values);
   };
 
   return (

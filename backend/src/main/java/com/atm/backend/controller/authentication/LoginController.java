@@ -1,5 +1,7 @@
 package com.atm.backend.controller.authentication;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,13 +42,13 @@ public class LoginController {
 
             if (userDto == null) {
                 return ResponseEntity.badRequest()
-                        .body("Email is wrong");
+                        .body(Map.of("message", "Email is wrong!"));
             } else if (!passwordEncoder.matches(usernamePassword.getCredentials().toString(), userDto.getPassword())) {
                 return ResponseEntity.badRequest()
-                        .body("Password is wrong");
+                        .body(Map.of("message", "Password is wrong!"));
             } else {
                 String accessToken = tokenProvider.generateAccessToken(userDto);
-                return ResponseEntity.ok(accessToken);
+                return ResponseEntity.ok().body(Map.of("message", accessToken));
             }
 
         } catch (Exception e) {

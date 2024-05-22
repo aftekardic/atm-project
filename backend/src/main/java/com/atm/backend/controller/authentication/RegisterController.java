@@ -1,5 +1,7 @@
 package com.atm.backend.controller.authentication;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +30,7 @@ public class RegisterController {
     public ResponseEntity<?> registerUser(@RequestBody UserDto user) {
 
         if (userRepository.findUserByEmail(user.getEmail()) != null) {
-            return ResponseEntity.badRequest().body("Email is already taken!");
+            return ResponseEntity.badRequest().body(Map.of("message", "Email is already taken!"));
         }
 
         UserDto new_user = new UserDto();
@@ -41,7 +43,8 @@ public class RegisterController {
 
         userRepository.save(baseService.dtoToEntity(new_user));
 
-        return ResponseEntity.ok("User registered successfully!");
+        return ResponseEntity.ok().body(Map.of("message", "User registered successfully!"));
+
     }
 
 }
