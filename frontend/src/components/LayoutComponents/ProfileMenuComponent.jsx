@@ -3,6 +3,7 @@ import { SettingOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./styles/profile.css";
+import { postRequest } from "../../utils/CustomFetcher";
 
 function ProfileMenuComponent() {
   const navigate = useNavigate();
@@ -25,7 +26,30 @@ function ProfileMenuComponent() {
   ];
 
   const handleMenuClick = (e) => {
-    navigate(e.key);
+    if (e.key.includes("logout")) {
+      const token = localStorage.getItem("token");
+      const tokenId = localStorage.getItem("tokenId");
+      const user_id = localStorage.getItem("user_id");
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenId");
+      localStorage.removeItem("user_id");
+
+      const objectToken = {
+        id: tokenId,
+        token: token,
+        user_id: user_id,
+      };
+      postRequest("/logOut", objectToken, {
+        Authorization: "Bearer " + token,
+      }).then((result) => {
+        if (result.status === 200) {
+          navigate("/");
+        } else {
+          navigate(0);
+        }
+      });
+    }
   };
   return (
     <Menu

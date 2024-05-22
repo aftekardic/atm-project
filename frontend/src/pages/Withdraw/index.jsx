@@ -18,7 +18,6 @@ const WithdrawPage = () => {
   }, []);
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
     const withdrawAmount = parseFloat(values.amount);
     if (withdrawAmount > currentAmount) {
       alert("Insufficient balance!");

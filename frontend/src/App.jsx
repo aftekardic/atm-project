@@ -1,13 +1,39 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import LoginPage from "./pages/Login";
 import HomePage from "./pages/Home";
 import DepositPage from "./pages/Deposit";
 import WithdrawPage from "./pages/Withdraw";
 import ProfilePage from "./pages/Profile";
 import LayoutComponent from "./components/LayoutComponents/LayoutComponent";
+import { postRequest } from "./utils/CustomFetcher";
 
 function App() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (
+      localStorage.getItem("token") !== null &&
+      localStorage.getItem("user_id") &&
+      localStorage.getItem("tokenId")
+    ) {
+      const tokenObj = {
+        id: localStorage.getItem("tokenId"),
+        token: localStorage.getItem("token"),
+        user_id: localStorage.getItem("user_id"),
+      };
+
+      postRequest("/validateToken", tokenObj).then((result) => {
+        if (result.status === 200) {
+          navigate("/home");
+        } else {
+          navigate("/");
+        }
+      });
+    } else {
+      navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <Routes>
       <Route path="/" Component={LoginPage} />

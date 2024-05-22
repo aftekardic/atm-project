@@ -32,25 +32,28 @@ public class SecurityFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain)
 
             throws ServletException, IOException, java.io.IOException {
-        if ("/authenticate".equals(request.getServletPath()) || "/register".equals(request.getServletPath())) {
+
+        if ("/authenticate".equals(request.getServletPath()) || "/register".equals(request.getServletPath())
+                || request.getServletPath().contains("/validateToken")
+                || request.getServletPath().contains("/role")) {
+
             filterChain.doFilter(request, response);
             return;
         }
         var token = this.recoverToken(request);
 
         if (token != null) {
-
             var validationToken = tokenService.validateToken(token);
             var user = userRepository.findUserByEmail(validationToken);
             var authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
         } else {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.setContentType("application/json");
             response.getWriter().write("{\"error\": \"Invalid or missing token\"}");
             return;
         }
-
         filterChain.doFilter(request, response);
 
     }

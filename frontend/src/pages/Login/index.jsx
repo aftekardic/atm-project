@@ -12,7 +12,10 @@ function LoginPage() {
 
   function handleLoginClick(values) {
     postRequest("/authenticate", values).then((result) => {
-      if (result.status == 200) {
+      if (result.status === 200) {
+        localStorage.setItem("token", result.data.token);
+        localStorage.setItem("tokenId", result.data.tokenId);
+        localStorage.setItem("user_id", result.data.user_id);
         navigate("/home");
       } else {
         message.error(result.data.message);
@@ -28,7 +31,7 @@ function LoginPage() {
       surname: values.surname,
     };
     postRequest("/register", newUser).then((result) => {
-      if (result.status == 200) {
+      if (result.status === 200) {
         message.success(result.data.message);
       } else {
         message.error(result.data.message);

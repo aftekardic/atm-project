@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RoleDto {
+public class TokenDto {
     private Long id;
-    private String name;
+    private String token;
+    private Long user_id;
 }

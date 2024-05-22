@@ -18,7 +18,6 @@ const DepositPage = () => {
   }, []);
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
     // Handle deposit logic here
     const depositAmount = parseFloat(values.amount);
     setCurrentAmount(currentAmount + depositAmount); // Update the current amount

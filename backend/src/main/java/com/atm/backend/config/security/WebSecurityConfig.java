@@ -16,43 +16,51 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-    @Autowired
-    SecurityFilter securityFilter;
+        @Autowired
+        SecurityFilter securityFilter;
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        @Bean
+        SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-        return httpSecurity
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(request -> request.getMethod().contains("POST")
-                                && request.getServletPath().startsWith("/register"))
-                        .permitAll()
-                        .requestMatchers(request -> request.getMethod().contains("POST")
-                                && request.getServletPath().startsWith("/authenticate"))
-                        .permitAll()
-                        .requestMatchers(request -> request.getMethod().contains("POST")
-                                && request.getServletPath().startsWith("/api/v1/role"))
-                        .permitAll()
-                        .requestMatchers(request -> request.getMethod().contains("GET")
-                                && request.getServletPath().startsWith("/api/v1/role"))
-                        .permitAll()
-                        .requestMatchers(request -> request.getMethod().contains("DELETE")
-                                && request.getServletPath().startsWith("/api/v1/role"))
-                        .permitAll()
-                        .anyRequest().authenticated())
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+                return httpSecurity
+                                .csrf(csrf -> csrf.disable())
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                                && request.getServletPath().startsWith("/register"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                                && request.getServletPath().startsWith("/authenticate"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                                && request.getServletPath().startsWith("/logOut"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                                && request.getServletPath()
+                                                                                .startsWith("/validateToken"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                                && request.getServletPath().startsWith("/api/v1/role"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("GET")
+                                                                && request.getServletPath().startsWith("/api/v1/role"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("DELETE")
+                                                                && request.getServletPath().startsWith("/api/v1/role"))
+                                                .permitAll()
+                                                .anyRequest().authenticated())
+                                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                                .build();
+        }
 
-    @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+        @Bean
+        AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+                return configuration.getAuthenticationManager();
+        }
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 }
