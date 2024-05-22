@@ -1,40 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import { SettingOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./styles/profile.css";
 
 function ProfileMenuComponent() {
-  const [current, setCurrent] = useState("1");
-  const onClick = (e) => {
-    console.log("click ", e);
-    setCurrent(e.key);
-  };
   const navigate = useNavigate();
+  const location = useLocation();
+
   const items = [
     {
       icon: <SettingOutlined />,
       children: [
         {
-          key: "profile",
+          key: "/profile",
           label: "Profile",
-          onClick: () => {
-            navigate(0);
-          },
         },
         {
-          key: "11",
+          key: "/logout",
           label: "Log Out",
-          onClick: () => {
-            navigate(0);
-          },
         },
       ],
     },
   ];
+
+  const handleMenuClick = (e) => {
+    navigate(e.key);
+  };
   return (
     <Menu
-      onClick={onClick}
+      onClick={handleMenuClick}
       style={{
         width: "auto",
         backgroundColor: "transparent",
@@ -42,7 +37,7 @@ function ProfileMenuComponent() {
         height: "auto",
         display: "flex",
       }}
-      selectedKeys={[current]}
+      selectedKeys={[location.pathname]}
       triggerSubMenuAction="click"
       mode="vertical"
       items={items}
