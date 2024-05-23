@@ -12,20 +12,18 @@ const ProfilePage = () => {
     name: null,
     surname: null,
     email: null,
-    password: null,
     role: null,
   });
 
   useEffect(() => {
-    getRequest(`/api/v1/user/get-info/${localStorage.getItem("user_id")}`).then(
-      (result) => {
-        if (result.status === 200) {
-          setProfileInfo(result.data.info);
-        } else {
-          message.error("Network Error!");
-        }
+    const user_id = localStorage.getItem("user_id");
+    getRequest(`/api/v1/user/info/${user_id}`).then((result) => {
+      if (result.status === 200) {
+        setProfileInfo(result.data.info);
+      } else {
+        message.error("Network Error!");
       }
-    );
+    });
   }, []);
 
   const handleEdit = () => {
@@ -45,7 +43,6 @@ const ProfilePage = () => {
       name: values.name,
       surname: values.surname,
       email: values.email,
-      password: values.password,
       role_id: values.role_id,
     };
     putRequest(
@@ -93,9 +90,6 @@ const ProfilePage = () => {
               <strong>Email:</strong> {profileInfo?.email}
             </p>
             <p>
-              <strong>Password:</strong> *****
-            </p>
-            <p>
               <strong>Role:</strong> {profileInfo?.role}
             </p>
 
@@ -135,15 +129,6 @@ const ProfilePage = () => {
               ]}
             >
               <Input />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              label="Password"
-              rules={[
-                { required: false, message: "Please input your password!" },
-              ]}
-            >
-              <Input.Password visibilityToggle={false} disabled />
             </Form.Item>
             <Form.Item name="role" label="Role" rules={[{ required: false }]}>
               <Input value={profileInfo.role} disabled />

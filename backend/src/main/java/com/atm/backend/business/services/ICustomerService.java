@@ -11,9 +11,9 @@ public interface ICustomerService {
 
     public float getAmountById(Long id);
 
-    public float depositById(Long id, float deposit);
+    public ResponseEntity<?> depositById(Long id, Long deposit);
 
-    public float withdrawById(Long id, float withdraw);
+    public ResponseEntity<?> withdrawById(Long id, Long withdraw);
 
     public ResponseEntity<?> updateUserById(Long id, UserDto userDto);
 

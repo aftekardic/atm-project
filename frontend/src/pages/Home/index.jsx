@@ -3,17 +3,19 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Alert } from "antd";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
+import { getRequest } from "../../utils/CustomFetcher";
 
 const HomePage = () => {
   const [currentAmount, setCurrentAmount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch current amount from API or set a static value
-    // Replace this with your actual API call
     const fetchCurrentAmount = async () => {
-      // Simulating an API call with a static value
-      setCurrentAmount(500); // Assume the current amount is 500
+      getRequest(`/api/v1/user/amount/${localStorage.getItem("user_id")}`).then(
+        (result) => {
+          setCurrentAmount(result.data.amount);
+        }
+      );
     };
 
     fetchCurrentAmount();

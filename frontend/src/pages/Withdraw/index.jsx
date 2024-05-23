@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Card, Alert } from "antd";
-import { DollarOutlined, MailOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Card, Alert, message } from "antd";
+import { DollarOutlined } from "@ant-design/icons";
 import styles from "./styles.module.css";
+import { getRequest, putRequest } from "../../utils/CustomFetcher";
 
 const WithdrawPage = () => {
   const [currentAmount, setCurrentAmount] = useState(0);
 
   useEffect(() => {
-    // Fetch current amount from API or set a static value
-    // Replace this with your actual API call
     const fetchCurrentAmount = async () => {
-      // Simulating an API call with a static value
-      setCurrentAmount(500); // Assume the current amount is 500
+      getRequest(`/api/v1/user/amount/${localStorage.getItem("user_id")}`).then(
+        (result) => {
+          setCurrentAmount(result.data.amount);
+        }
+      );
     };
 
     fetchCurrentAmount();
@@ -19,11 +21,17 @@ const WithdrawPage = () => {
 
   const onFinish = (values) => {
     const withdrawAmount = parseFloat(values.amount);
-    if (withdrawAmount > currentAmount) {
-      alert("Insufficient balance!");
-      return;
-    }
-    setCurrentAmount(currentAmount - withdrawAmount); // Update the current amount
+
+    putRequest(`/api/v1/user/withdraw/${localStorage.getItem("user_id")}`, {
+      withdraw: withdrawAmount,
+    }).then((result) => {
+      if (result.status === 200) {
+        setCurrentAmount(currentAmount - withdrawAmount);
+        message.success(result.data.amount);
+      } else {
+        message.error(result.data.amount);
+      }
+    });
   };
 
   return (
@@ -43,21 +51,6 @@ const WithdrawPage = () => {
             email: "",
           }}
         >
-          <Form.Item
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: "Please input your email!",
-              },
-              {
-                type: "email",
-                message: "Please enter a valid email address!",
-              },
-            ]}
-          >
-            <Input prefix={<MailOutlined />} placeholder="Email" />
-          </Form.Item>
           <Form.Item
             name="amount"
             rules={[
