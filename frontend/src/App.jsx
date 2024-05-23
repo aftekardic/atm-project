@@ -24,12 +24,13 @@ function App() {
 
       postRequest("/validateToken", tokenObj).then((result) => {
         if (result.status === 200) {
-          navigate("/home");
+          localStorage.setItem("validation", true);
         } else {
-          navigate("/");
+          localStorage.setItem("validation", false);
         }
       });
     } else {
+      localStorage.clear();
       navigate("/");
     }
   }, [navigate]);

@@ -1,5 +1,7 @@
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
+const token = localStorage.getItem("token");
+
 function CustomFetcher(endpoint, options) {
   const url = `${BASE_URL}${endpoint}`;
 
@@ -21,6 +23,7 @@ function getRequest(endpoint, headers = {}) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
       ...headers,
     },
   };

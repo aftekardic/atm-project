@@ -27,6 +27,8 @@ public class WebSecurityConfig {
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(authorize -> authorize
+
+                                                // for auth
                                                 .requestMatchers(request -> request.getMethod().contains("POST")
                                                                 && request.getServletPath().startsWith("/register"))
                                                 .permitAll()
@@ -40,6 +42,19 @@ public class WebSecurityConfig {
                                                                 && request.getServletPath()
                                                                                 .startsWith("/validateToken"))
                                                 .permitAll()
+
+                                                // for customer
+                                                .requestMatchers(request -> request.getMethod().contains("GET")
+                                                                && request.getServletPath().startsWith("/api/v1/user"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                                && request.getServletPath().startsWith("/api/v1/user"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("PUT")
+                                                                && request.getServletPath().startsWith("/api/v1/user"))
+                                                .permitAll()
+
+                                                // for adding a new role
                                                 .requestMatchers(request -> request.getMethod().contains("POST")
                                                                 && request.getServletPath().startsWith("/api/v1/role"))
                                                 .permitAll()

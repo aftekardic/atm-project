@@ -1,9 +1,11 @@
 package com.atm.backend.business.services;
 
+import java.util.Map;
+
 import com.atm.backend.business.dto.UserDto;
 
 public interface ICustomerService {
-    public UserDto getInfo(Long id);
+    public Map<String, Object> getInfo(Long id);
 
     public float getAmountById(Long id);
 

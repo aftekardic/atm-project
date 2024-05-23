@@ -26,7 +26,10 @@ function ProfileMenuComponent() {
   ];
 
   const handleMenuClick = (e) => {
-    if (e.key.includes("logout")) {
+    if (
+      e.key.includes("logout") &&
+      localStorage.getItem("validation") === "true"
+    ) {
       const token = localStorage.getItem("token");
       const tokenId = localStorage.getItem("tokenId");
       const user_id = localStorage.getItem("user_id");
@@ -40,15 +43,15 @@ function ProfileMenuComponent() {
         token: token,
         user_id: user_id,
       };
-      postRequest("/logOut", objectToken, {
-        Authorization: "Bearer " + token,
-      }).then((result) => {
+      postRequest("/logOut", objectToken).then((result) => {
         if (result.status === 200) {
           navigate("/");
         } else {
           navigate(0);
         }
       });
+    } else {
+      localStorage.getItem("validation") === "true" && navigate(e.key);
     }
   };
   return (

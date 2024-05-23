@@ -1,17 +1,30 @@
-import React, { useState } from "react";
-import { Form, Input, Button, Card } from "antd";
+import React, { useEffect, useState } from "react";
+import { Form, Input, Button, Card, message } from "antd";
 import styles from "./styles.module.css";
+import { getRequest } from "../../utils/CustomFetcher";
 
 const ProfilePage = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
   const [profileInfo, setProfileInfo] = useState({
-    name: "John",
-    surname: "Doe",
-    email: "john.doe@example.com",
-    password: "123456",
-    role: "Customer",
+    name: null,
+    surname: null,
+    email: null,
+    password: null,
+    role: null,
   });
+
+  useEffect(() => {
+    getRequest(`/api/v1/user/get-info/${localStorage.getItem("user_id")}`).then(
+      (result) => {
+        if (result.status === 200) {
+          setProfileInfo(result.data.info);
+        } else {
+          message.error("Network Error!");
+        }
+      }
+    );
+  }, []);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -33,20 +46,19 @@ const ProfilePage = () => {
         {!isEditing ? (
           <div>
             <p>
-              <strong>Name:</strong> {profileInfo.name}
+              <strong>Name:</strong> {profileInfo?.name}
             </p>
             <p>
-              <strong>Surname:</strong> {profileInfo.surname}
+              <strong>Surname:</strong> {profileInfo?.surname}
             </p>
             <p>
-              <strong>Email:</strong> {profileInfo.email}
+              <strong>Email:</strong> {profileInfo?.email}
             </p>
             <p>
-              <strong>Password:</strong>{" "}
-              {"*".repeat(profileInfo.password.length)}
+              <strong>Password:</strong> *****
             </p>
             <p>
-              <strong>Role:</strong> {profileInfo.role}
+              <strong>Role:</strong> {profileInfo?.role}
             </p>
 
             <Button type="primary" onClick={handleEdit}>
@@ -88,12 +100,12 @@ const ProfilePage = () => {
             </Form.Item>
             <Form.Item
               name="password"
-              label="password"
+              label="Password"
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
             >
-              <Input.Password />
+              <Input.Password visibilityToggle={false} />
             </Form.Item>
             <Form.Item name="role" label="Role" rules={[{ required: false }]}>
               <Input value={profileInfo.role} disabled />
