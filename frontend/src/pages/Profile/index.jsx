@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Card, message } from "antd";
 import styles from "./styles.module.css";
-import { getRequest } from "../../utils/CustomFetcher";
+import { getRequest, postRequest, putRequest } from "../../utils/CustomFetcher";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
   const [profileInfo, setProfileInfo] = useState({
@@ -38,6 +40,42 @@ const ProfilePage = () => {
   const handleSave = (values) => {
     setProfileInfo(values);
     setIsEditing(false);
+
+    const userDto = {
+      name: values.name,
+      surname: values.surname,
+      email: values.email,
+      password: values.password,
+      role_id: values.role_id,
+    };
+    putRequest(
+      `/api/v1/user/update/${localStorage.getItem("user_id")}`,
+      userDto
+    ).then((result) => {
+      message.info(result.data.message);
+      const token = localStorage.getItem("token");
+      const tokenId = localStorage.getItem("tokenId");
+      const user_id = localStorage.getItem("user_id");
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenId");
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("validation");
+      const tokenDto = {
+        id: tokenId,
+        token: token,
+        user_id: user_id,
+      };
+      postRequest("/logOut", {
+        tokenDto: tokenDto,
+      }).then((result) => {
+        if (result.status === 200) {
+          navigate("/");
+        } else {
+          navigate(0);
+        }
+      });
+    });
   };
 
   return (
@@ -102,10 +140,10 @@ const ProfilePage = () => {
               name="password"
               label="Password"
               rules={[
-                { required: true, message: "Please input your password!" },
+                { required: false, message: "Please input your password!" },
               ]}
             >
-              <Input.Password visibilityToggle={false} />
+              <Input.Password visibilityToggle={false} disabled />
             </Form.Item>
             <Form.Item name="role" label="Role" rules={[{ required: false }]}>
               <Input value={profileInfo.role} disabled />

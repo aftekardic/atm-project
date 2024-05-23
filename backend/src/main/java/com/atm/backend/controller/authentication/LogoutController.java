@@ -26,8 +26,6 @@ public class LogoutController {
         TokenDto tokenDto = logoutRequestDto.getTokenDto();
         String email = logoutRequestDto.getEmail();
 
-        System.out.println("aa" + tokenDto);
-
         if (tokenDto == null && email != null) {
             Long user_id = userRepository.findUserByEmail(email).getId();
             Long tokenId = tokenRepository.findByUserId(user_id).getId();

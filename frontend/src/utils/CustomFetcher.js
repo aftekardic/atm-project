@@ -37,6 +37,7 @@ function postRequest(endpoint, data, headers = {}) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
       ...headers,
     },
     body: JSON.stringify(data),
@@ -51,6 +52,7 @@ function putRequest(endpoint, data, headers = {}) {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
       ...headers,
     },
     body: JSON.stringify(data),
@@ -65,6 +67,7 @@ function deleteRequest(endpoint, headers = {}) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
       ...headers,
     },
   };
