@@ -17,6 +17,10 @@ function LoginPage() {
         localStorage.setItem("tokenId", result.data.tokenId);
         localStorage.setItem("user_id", result.data.user_id);
         navigate("/home");
+      } else if (result.status === 401) {
+        postRequest("/logOut", { email: values.email }).then((result) => {
+          navigate("/");
+        });
       } else {
         message.error(result.data.message);
       }

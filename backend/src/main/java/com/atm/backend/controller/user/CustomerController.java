@@ -20,7 +20,6 @@ public class CustomerController {
 
     @GetMapping("/get-info/{id}")
     public ResponseEntity<?> getMethodName(@PathVariable Long id) {
-        System.out.println(customerService.getInfo(id));
         return ResponseEntity.ok().body(Map.of("info", customerService.getInfo(id)));
     }
 

@@ -87,7 +87,7 @@ public class LoginController {
             }
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Required logout!"));
         }
     }
 

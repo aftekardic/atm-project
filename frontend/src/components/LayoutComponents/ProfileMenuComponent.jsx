@@ -37,13 +37,15 @@ function ProfileMenuComponent() {
       localStorage.removeItem("token");
       localStorage.removeItem("tokenId");
       localStorage.removeItem("user_id");
-
-      const objectToken = {
+      localStorage.removeItem("validation");
+      const tokenDto = {
         id: tokenId,
         token: token,
         user_id: user_id,
       };
-      postRequest("/logOut", objectToken).then((result) => {
+      postRequest("/logOut", {
+        tokenDto: tokenDto,
+      }).then((result) => {
         if (result.status === 200) {
           navigate("/");
         } else {

@@ -34,6 +34,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             throws ServletException, IOException, java.io.IOException {
 
         if ("/authenticate".equals(request.getServletPath()) || "/register".equals(request.getServletPath())
+                || "/logOut".equals(request.getServletPath())
                 || request.getServletPath().contains("/validateToken")
                 || request.getServletPath().contains("/role")) {
 
