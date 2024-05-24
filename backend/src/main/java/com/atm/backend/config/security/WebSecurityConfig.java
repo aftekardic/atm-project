@@ -64,6 +64,7 @@ public class WebSecurityConfig {
                                                 .requestMatchers(request -> request.getMethod().contains("PUT")
                                                                 && request.getServletPath().startsWith("/api/v1/admin"))
                                                 .permitAll()
+
                                                 // for adding a new role
                                                 .requestMatchers(request -> request.getMethod().contains("POST")
                                                                 && request.getServletPath().startsWith("/api/v1/role"))
