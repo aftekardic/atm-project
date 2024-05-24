@@ -21,7 +21,6 @@ public class WebSecurityConfig {
 
         @Bean
         SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-
                 return httpSecurity
                                 .csrf(csrf -> csrf.disable())
                                 .sessionManagement(session -> session
@@ -29,50 +28,50 @@ public class WebSecurityConfig {
                                 .authorizeHttpRequests(authorize -> authorize
 
                                                 // for auth
-                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                .requestMatchers(request -> request.getMethod().equals("POST")
                                                                 && request.getServletPath().startsWith("/register"))
                                                 .permitAll()
-                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                .requestMatchers(request -> request.getMethod().equals("POST")
                                                                 && request.getServletPath().startsWith("/authenticate"))
                                                 .permitAll()
-                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                .requestMatchers(request -> request.getMethod().equals("POST")
                                                                 && request.getServletPath().startsWith("/logOut"))
                                                 .permitAll()
-                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                .requestMatchers(request -> request.getMethod().equals("POST")
                                                                 && request.getServletPath()
                                                                                 .startsWith("/validateToken"))
                                                 .permitAll()
 
                                                 // for customer
-                                                .requestMatchers(request -> request.getMethod().contains("GET")
+                                                .requestMatchers(request -> request.getMethod().equals("GET")
                                                                 && request.getServletPath().startsWith("/api/v1/user"))
-                                                .permitAll()
-                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                .hasAnyRole("admin", "customer")
+                                                .requestMatchers(request -> request.getMethod().equals("POST")
                                                                 && request.getServletPath().startsWith("/api/v1/user"))
-                                                .permitAll()
-                                                .requestMatchers(request -> request.getMethod().contains("PUT")
+                                                .hasAnyRole("admin", "customer")
+                                                .requestMatchers(request -> request.getMethod().equals("PUT")
                                                                 && request.getServletPath().startsWith("/api/v1/user"))
-                                                .permitAll()
+                                                .hasAnyRole("admin", "customer")
 
                                                 // for admin
-                                                .requestMatchers(request -> request.getMethod().contains("GET")
+                                                .requestMatchers(request -> request.getMethod().equals("GET")
                                                                 && request.getServletPath().startsWith("/api/v1/admin"))
-                                                .permitAll()
-                                                .requestMatchers(request -> request.getMethod().contains("DELETE")
+                                                .hasRole("admin")
+                                                .requestMatchers(request -> request.getMethod().equals("DELETE")
                                                                 && request.getServletPath().startsWith("/api/v1/admin"))
-                                                .permitAll()
-                                                .requestMatchers(request -> request.getMethod().contains("PUT")
+                                                .hasRole("admin")
+                                                .requestMatchers(request -> request.getMethod().equals("PUT")
                                                                 && request.getServletPath().startsWith("/api/v1/admin"))
-                                                .permitAll()
+                                                .hasRole("admin")
 
                                                 // for adding a new role
-                                                .requestMatchers(request -> request.getMethod().contains("POST")
+                                                .requestMatchers(request -> request.getMethod().equals("POST")
                                                                 && request.getServletPath().startsWith("/api/v1/role"))
                                                 .permitAll()
-                                                .requestMatchers(request -> request.getMethod().contains("GET")
+                                                .requestMatchers(request -> request.getMethod().equals("GET")
                                                                 && request.getServletPath().startsWith("/api/v1/role"))
                                                 .permitAll()
-                                                .requestMatchers(request -> request.getMethod().contains("DELETE")
+                                                .requestMatchers(request -> request.getMethod().equals("DELETE")
                                                                 && request.getServletPath().startsWith("/api/v1/role"))
                                                 .permitAll()
                                                 .anyRequest().authenticated())
