@@ -54,6 +54,16 @@ public class WebSecurityConfig {
                                                                 && request.getServletPath().startsWith("/api/v1/user"))
                                                 .permitAll()
 
+                                                // for admin
+                                                .requestMatchers(request -> request.getMethod().contains("GET")
+                                                                && request.getServletPath().startsWith("/api/v1/admin"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("DELETE")
+                                                                && request.getServletPath().startsWith("/api/v1/admin"))
+                                                .permitAll()
+                                                .requestMatchers(request -> request.getMethod().contains("PUT")
+                                                                && request.getServletPath().startsWith("/api/v1/admin"))
+                                                .permitAll()
                                                 // for adding a new role
                                                 .requestMatchers(request -> request.getMethod().contains("POST")
                                                                 && request.getServletPath().startsWith("/api/v1/role"))

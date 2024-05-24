@@ -46,15 +46,17 @@ public class LoginController {
 
         TokenDto tokenDto = baseService.tokenEntityToDto(tokenRepository.findByUserId(tokenObj.getUser_id()));
 
+        RoleDto userRole = baseService.roleEntityToDto(userRepository.findById(tokenObj.getUser_id()).get().getRole());
+
         if (tokenDto != null
                 && (tokenDto.getToken().contains(tokenObj.getToken())
                         || tokenObj.getToken().contains(tokenDto.getToken()))
                 && tokenDto.getId() == tokenDto.getId()
                 && tokenDto.getUser_id() == tokenObj.getUser_id()) {
 
-            return ResponseEntity.ok().body(Map.of("message", "Token not null"));
+            return ResponseEntity.ok().body(Map.of("message", "Token not null", "role", userRole));
         }
-        return ResponseEntity.badRequest().body(Map.of("message", "Token null"));
+        return ResponseEntity.badRequest().body(Map.of("message", "Token null", "role", "Role null"));
 
     }
 

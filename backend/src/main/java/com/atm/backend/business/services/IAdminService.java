@@ -1,17 +1,16 @@
 package com.atm.backend.business.services;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 
 import com.atm.backend.business.dto.UserDto;
+import com.atm.backend.data.entity.UserEntity;
 
 public interface IAdminService {
-    public ArrayList<UserDto> getAllUser();
+    public List<UserEntity> getAllUser();
 
-    public UserDto getUserById(Long id);
+    public ResponseEntity<?> updateUserById(Long id, UserDto userDto);
 
-    public String addUser(UserDto userDto);
-
-    public String updateUserById(Long id, UserDto userDto);
-
-    public String deleteUserById(Long id);
+    public ResponseEntity<?> deleteUserById(Long id);
 }

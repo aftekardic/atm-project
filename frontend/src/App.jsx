@@ -7,6 +7,7 @@ import WithdrawPage from "./pages/Withdraw";
 import ProfilePage from "./pages/Profile";
 import LayoutComponent from "./components/LayoutComponents/LayoutComponent";
 import { postRequest } from "./utils/CustomFetcher";
+import UserListPage from "./pages/AdminPages/UserList";
 
 function App() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function App() {
       postRequest("/validateToken", tokenObj).then((result) => {
         if (result.status === 200) {
           localStorage.setItem("validation", true);
+          localStorage.setItem("role", JSON.stringify(result.data.role));
         } else {
           localStorage.setItem("validation", false);
         }
@@ -43,6 +45,7 @@ function App() {
         <Route path="deposit" element={<DepositPage />} />
         <Route path="withdraw" element={<WithdrawPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="user-list" element={<UserListPage />} />
       </Route>
     </Routes>
   );

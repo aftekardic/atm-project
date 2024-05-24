@@ -75,7 +75,7 @@ public class CustomerService implements ICustomerService {
             user.setName(userDto.getName());
             user.setSurname(userDto.getSurname());
             user.setEmail(userDto.getEmail());
-            RoleDto roleDto = baseService.roleEntityToDto(roleRepository.findById(user.getRole_id()).get());
+            RoleDto roleDto = baseService.roleEntityToDto(roleRepository.findById(userDto.getRole_id()).get());
             userRepository.save(baseService.dtoToEntity(user, roleDto));
             return ResponseEntity.ok()
                     .body(Map.of("message", "Information was updated succesfully! Please log in again..."));

@@ -8,6 +8,7 @@ const { Header, Content, Footer } = Layout;
 function LayoutComponent() {
   const navigate = useNavigate();
   const location = useLocation();
+  const role = localStorage.getItem("role");
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -18,6 +19,9 @@ function LayoutComponent() {
     { key: "/withdraw", label: "Withdraw" },
   ];
 
+  if (JSON.parse(role)?.name === "admin") {
+    items.push({ key: "/user-list", label: "User List" });
+  }
   const handleMenuClick = (e) => {
     navigate(e.key);
   };
