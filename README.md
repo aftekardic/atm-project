@@ -41,7 +41,6 @@ Once Git is installed, clone the repository to your local machine:
 2. Navigate to the directory where you want to clone the repository.
 
 3. Run the following command:
-
 ```
 git clone https://github.com/aftekardic/atm-project.git
 ```
@@ -68,32 +67,36 @@ mvn clean install
 
       - Additional Setup
 
-            1. Configure your database settings in src/main/resources/application.properties.
+         1. Configure your database settings in src/main/resources/application.properties.
 
-            2. Ensure you have the necessary environment variables set up for database access and other configurations.
+         2. Ensure you have the necessary environment variables set up for database access and other configurations.
 
       - Run backend application
-        `    cd backend
-    mvn spring-boot:run
-   `
+        ```
+        cd backend
+        mvn spring-boot:run
+        ```
         or you can run from BackendApplication.java run button.
 
     - **Frontend**
 
       - Additional Setup
 
-            1. Firstly you can set the .env file for frontend requests.
+         1. Firstly you can set the .env file for frontend requests.
 
-            2. Open the .env file in the frontend home directory and configure it according to your needs. After you can run the frontend application.
+         2. Open the .env file in the frontend home directory and configure it according to your needs. After you can run the frontend application.
 
       - Run frontend application
-        `    cd frontend
-    npm run start
-   `
+        ```
+        cd frontend
+        npm run start
+        ```
 
 ### API Usage
 
 ---
+
+If you are using backend only, you should first get a token from the /authenticate endpoint, then you can use other endpoints by adding `Bearer <your_token>` to the Authorization of the Header.
 
 | HTTP Method | Endpoint                   | Description                        |
 | ----------- | -------------------------- | ---------------------------------- |
