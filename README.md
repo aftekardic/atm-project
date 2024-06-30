@@ -8,7 +8,7 @@ The ATM Project provides functionalities for various banking transactions such a
 
 1. **User Registration and Login:**
 
-   - **Registration: **New customers must register by providing a email, name, surname and password. Passwords are securely hashed using Spring Security before being stored in the database.
+   - **Registration:** New customers must register by providing a email, name, surname and password. Passwords are securely hashed using Spring Security before being stored in the database.
    - **Login:** Registered customers can log in by entering their credentials.
 
 2. **Account Management:**
