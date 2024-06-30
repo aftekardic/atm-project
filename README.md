@@ -13,7 +13,7 @@ The ATM Project provides functionalities for various banking transactions such a
 
 2. **Account Management:**
 
-   - **Deposit Funds: **Customers can add money to their account.
+   - **Deposit Funds:** Customers can add money to their account.
    - **Withdraw Funds:** Customers can withdraw money from their account, provided they have sufficient funds. The system validates the balance before processing withdrawals.
    - **Account Settings:** Users can change account information such as name, surname or email. They cannot change the password and account role.
 
